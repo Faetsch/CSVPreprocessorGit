@@ -13,11 +13,15 @@ public class Main
     public static void main(String[] args) throws IOException
     {
         Preprocessor p = new Preprocessor("zeitpunkt", "aussentemp", "vorlauf", "rücklauf");
-        p.readCSV("/home/thebrocc/Desktop/test3");
-        p.processSubstringTable(0, 0, 10);
-        p.processIntervalTable(1, 2);
-        p.processIntervalTable(2, 2);
-        p.processIntervalTable(3, 2);
-        p.writeCSV("/home/thebrocc/Desktop/testMODIFIED");
+        p.readCSV("C:\\Users\\Fätsch\\IdeaProjects\\CSVPreprocessor\\src\\test\\resources\\test3");
+
+        p.constructNewColumn("Temperaturspreizung", 2, 3, Preprocessor.DIFFERENCE);
+
+        p.processSubstringTable(0, 0, 13);
+        p.processIntervalTable(1, 10);
+        p.processIntervalTable(2, 10);
+        p.processIntervalTable(3, 10);
+
+        p.writeCSV("C:\\Users\\Fätsch\\IdeaProjects\\CSVPreprocessor\\src\\test\\resources\\test3Difference");
     }
 }

@@ -14,6 +14,11 @@ import java.util.Arrays;
 
 public class Preprocessor
 {
+    public static final int DIFFERENCE = 0;
+    public static final int SUM = 1;
+    public static final int DIVISION = 2;
+    public static final int PRODUCT  = 3;
+
     private ArrayList<String> header = new ArrayList<String>();
     private ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
 
@@ -65,16 +70,48 @@ public class Preprocessor
     }
 
     //TODO: non math operations base classes
-    public void processConstructNewColumn(String newName, Operation op)
+    public void constructNewColumn(String name, int index1, int index2, int code)
     {
-        header.add(newName);
-        ArrayList<String> newColumn = new ArrayList<String>();
-        newColumn.stream().forEach(s -> op.getResult());
+        header.add(name);
+        table.get(0).add(name);
+        int amountRows = table.size()-1;
+
+
+        double left;
+        double right;
+        for(int i = 1; i < amountRows; i++)
+        {
+            left = Double.parseDouble(table.get(i).get(index1));
+            right = Double.parseDouble(table.get(i).get(index2));
+            switch(code)
+            {
+                case DIFFERENCE:
+                    table.get(i).add(String.valueOf(left - right));
+                    break;
+
+                case SUM:
+                    table.get(i).add(String.valueOf(left + right));
+                    break;
+
+                case PRODUCT:
+                    table.get(i).add(String.valueOf(left * right));
+                    break;
+
+                case DIVISION:
+                    table.get(i).add(String.valueOf(left / right));
+                    break;
+
+            }
+        }
+
     }
+
+
 
     public CSVParser readCSV(String path) throws IOException
     {
         File csvData = new File(path);
+        System.out.println(csvData.getAbsolutePath());
         CSVParser parser = null;
 
         try
@@ -86,7 +123,7 @@ public class Preprocessor
                 ArrayList<String> row = new ArrayList<String>();
                 for(int i = 0; i < headersize; i++)
                 {
-                    row.set(i, record.get(i));
+                    row.add(record.get(i));
                 }
                 table.add(row);
             }
