@@ -74,7 +74,7 @@ public class Preprocessor
     {
         header.add(name);
         table.get(0).add(name);
-        int amountRows = table.size()-1;
+        int amountRows = table.size();
 
 
         double left;
